@@ -1,0 +1,24 @@
+#kent-blogs-footer {
+  box-sizing: border-box;
+  background: #f4f4f4;
+  color: #313131;
+  border-top: 1px solid #a5a5a5;
+  padding: 25px 30px;
+  text-align: center;
+  font-family: arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+#kent-blogs-footer a {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: normal;
+  color: #1f4f82;
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+}
+#kent-blogs-footer a:hover,
+#kent-blogs-footer a:focus {
+  border-bottom: 1px solid #1f4f82;
+  background: none;
+}

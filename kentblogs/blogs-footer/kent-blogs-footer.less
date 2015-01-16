@@ -1,0 +1,34 @@
+@link-colour: #1f4f82;
+@link-hover-colour: #6b81be;
+@footer-colour: #f4f4f4;
+@footer-border: #a5a5a5;
+
+.link-style() {
+  display: inline-block;
+  font-size:16px;
+  font-weight: normal;
+  color: @link-colour;
+  text-decoration: none;
+
+  border-bottom: 1px solid #ddd;
+  &:hover, &:focus {
+    border-bottom: 1px solid @link-colour;
+    background: none;
+  };
+}
+
+#kent-blogs-footer{
+  box-sizing: border-box;
+  background: @footer-colour;
+  color:#313131;
+  border-top:1px solid @footer-border;
+  padding: 25px 30px;
+  text-align: center;
+  font-family: arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+
+  a{
+    .link-style();
+  }
+}
