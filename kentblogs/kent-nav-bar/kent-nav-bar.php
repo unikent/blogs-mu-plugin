@@ -1,16 +1,24 @@
 <?php
 
 //register kent-nav-bar script
-//wp_register_script('kent-nav-bar','//static.kent.ac.uk/navbar/kent-header-light.min.js',array(),null,true);
-wp_register_script('kent-nav-bar','//localhost/kent-nav-bar/dist/kent-header-light.min.js',array(),null,true);
+if( WP_ENV=='local'){
+    wp_register_script('kent-nav-bar','http://localhost/kent-nav-bar/dist/kent-header-light.min.js',array(),null,true);
+}else{
+    wp_register_script('kent-nav-bar','//static.kent.ac.uk/navbar/kent-header-light.min.js',array(),null,true);
+}
+//
+
 
 function kentblogs_nav_bar(){
     wp_enqueue_script('kent-nav-bar');
 
     $options=array(
-        'navlinks'=>'<li><a role="button" aria-label="All blogs" href="//blogs.kent.ac.uk" class="menu-link">All blogs</a></li>',
-        'basedir' =>'//localhost/kent-nav-bar/dist/'
+        'navlinks'=>'<li><a role="button" aria-label="All blogs" href="//blogs.kent.ac.uk" class="menu-link">All blogs</a></li>'
     );
+
+    if( WP_ENV=='local'){
+        $options['basedir'] = 'http://localhost/kent-nav-bar/dist/';
+    }
 
     $option_keys=array('kb_navbar_bg_color');
     foreach($option_keys as $key){

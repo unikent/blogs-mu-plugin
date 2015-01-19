@@ -8,6 +8,10 @@
   font-family: arial, sans-serif !important;
   font-size: 16px !important;
   font-weight: 400 !important;
+  width: 100%;
+  min-height: 78px;
+  margin-top: 75px;
+  position: relative;
 }
 #kent-blogs-footer a {
   display: inline-block;

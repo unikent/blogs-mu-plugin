@@ -26,6 +26,42 @@ function kentblogs_add_footer(){
             style = styles.join(' ');
         }
         document.getElementById('kent-blogs-footer').style = style;
+        // Window load event used just in case window height is dependant upon images
+        jQuery(window).bind("load", function() {
+
+            var footerHeight = 0,
+                footerTop = 0,
+                $footer = jQuery("#kent-blogs-footer");
+
+            jQuery(window)
+                .scroll(positionFooter)
+                .resize(positionFooter);
+
+            jQuery(window).trigger('resize');
+
+            function positionFooter() {
+
+                footerHeight = $footer.outerHeight();
+
+                footerTop = (jQuery(window).scrollTop()+jQuery(window).height()-footerHeight-75)+"px";
+
+                if ( (jQuery(document.body).height()+footerHeight) < jQuery(window).height()) {
+                    $footer.css({
+                        position: "absolute",
+                        top: footerTop
+                    });
+                } else {
+                    $footer.css({
+                        position: "relative"
+                    })
+                }
+
+            }
+
+
+
+        });
+
     </script>
 <?php
 }

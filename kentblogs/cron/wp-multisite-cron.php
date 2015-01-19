@@ -1,6 +1,5 @@
 <?php
 
-define('DOING_CRON', true);
 // Get composer
 require_once(dirname( __FILE__ )."/../../../../../vendor/autoload.php");
 
@@ -46,8 +45,8 @@ foreach($crons_to_run as $cron){
 		// clear trailing /
 		$cron['path']= rtrim($cron['path'], '/');
 
-		$path = $cron['path'].'/wp-cron.php [Blog: '.$cron['blogid'].' - CRON scheduled for '.date("Y-m-d H:i", $cron['timestamp']).']';
-		echo "Curl: {$path} ";
+		$path = $cron['path'].'/wp-cron.php';
+		echo "Curl: {$path}  [Blog: {$cron['blogid']} - CRON scheduled for " .$cron['timestamp'].']';
 		
 		$success = wp_remote_get( $path );
 
@@ -56,9 +55,9 @@ foreach($crons_to_run as $cron){
 			echo "- OK \n";
 		}else{
 			if(is_wp_error($success)){
-
-				if($success->get_error_code() == 28){
-					echo "- Ok [timeout] \n";
+				error_log(print_r($success->get_error_codes(),true));
+				if(strpos($success->get_error_message(),'Operation timed out')!==false){
+					echo "- OK [timeout] \n";
 				}else{
 					echo "- FAIL ".$success->get_error_message()."\n";
 				}
