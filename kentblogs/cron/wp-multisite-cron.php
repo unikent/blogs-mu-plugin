@@ -55,7 +55,7 @@ foreach($crons_to_run as $cron){
 			echo "- OK \n";
 		}else{
 			if(is_wp_error($success)){
-				error_log(print_r($success->get_error_codes(),true));
+			
 				if(strpos($success->get_error_message(),'Operation timed out')!==false){
 					echo "- OK [timeout] \n";
 				}else{
