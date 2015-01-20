@@ -74,8 +74,8 @@ function kentblogs_aggregator_init_posts(){
 }
 
 function kentblogs_aggregator_format_post($post, $blog){
-	if(is_int($post)) $post = get_post($post);
-	if(is_int($blog)) $blog = get_blog_details($blog);
+	if(is_numeric($post)) $post = get_post($post);
+	if(is_numeric($blog)) $blog = get_blog_details($blog);
 
 	if(empty($post) || empty($blog)) return false;
 
@@ -108,15 +108,15 @@ function kentblogs_aggregator_format_post($post, $blog){
 
 function kentblogs_aggregator_insert_post($post, $blog){
 
-	if(is_int($post)) $post = get_post($post);
-	if(is_int($blog)) $blog = get_blog_details($blog);
+	if(is_numeric($post)) $post = get_post($post);
+	if(is_numeric($blog)) $blog = get_blog_details($blog);
 
 	if(empty($post) || empty($blog)) return false;
 
 	$aggregate_data = get_site_option('wp-multisite-post-aggregate');
 
-	if (isset($aggregate_data[$blog_id.'_'.$post['id']])) {
-		$aggregate_data[$blog_id.'_'.$post->id] = $post;
+	if (isset($aggregate_data[$blog->blog_id.'_'.$post['id']])) {
+		$aggregate_data[$blog->blog_id.'_'.$post['id']] = $post;
 	}
 	else {
 		// insert into the right place
@@ -129,8 +129,8 @@ function kentblogs_aggregator_insert_post($post, $blog){
 
 function kentblogs_aggregator_remove_post($post, $blog){
 
-	if(is_int($post)) $post = get_post($post);
-	if(is_int($blog)) $blog = get_blog_details($blog);
+	if(is_numeric($post)) $post = get_post($post);
+	if(is_numeric($blog)) $blog = get_blog_details($blog);
 
 	if(empty($post) || empty($blog)) return false;
 
