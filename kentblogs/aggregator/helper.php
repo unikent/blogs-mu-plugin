@@ -16,13 +16,13 @@ function kentblogs_aggregator_post_saved($id){
 	// add this post if it meets the criteria
 	$post = kentblogs_aggregator_format_post($post, $blog_id);
 
-	if(empty($post)) return;
-
+	if(empty($post) && isset($aggregate_data[$blog_id.'_'.$id])) {
+		unset($aggregate_data[$blog_id.'_'.$id]);
+		update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+		return true;
+	}
+	
 	kentblogs_aggregator_insert_post($post, $blog_id);
-}
-
-function kentblogs_aggregator_post_removed($id){
-	kentblogs_aggregator_remove_post($id, get_current_blog_id());
 }
 
 /**
@@ -84,6 +84,8 @@ function kentblogs_aggregator_format_post($post, $blog){
 	}
 
 	Voce\Thermal\v1\Controllers\Posts::format($post);
+
+	if($post->status !== 'publish' || $post->type !== 'post') return false;
 	$featured_image = isset($post->featured_image) && !empty($post->featured_image) ? $post->featured_image : isset($post->media[0]) ? $post->media[0] : array();
 	
 	if (empty($featured_image)) return false;
@@ -120,22 +122,6 @@ function kentblogs_aggregator_insert_post($post, $blog){
 		// insert into the right place
 		$aggregate_data = array($blog->blog_id.'_'.$post['id'] => $post) + $aggregate_data;
 		$aggregate_data = kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
-	}
-
-	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
-}
-
-function kentblogs_aggregator_remove_post($post, $blog){
-
-	if(is_numeric($post)) $post = get_post($post, 'ARRAY_A');
-	if(is_numeric($blog)) $blog = get_blog_details($blog);
-
-	if(empty($post) || empty($blog)) return false;
-
-	$aggregate_data = get_site_option('wp-multisite-post-aggregate');
-
-	if (isset($aggregate_data[$blog->blog_id.'_'.$post['ID']])) {
-		unset($aggregate_data[$blog->blog_id.'_'.$post['ID']]);
 	}
 
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
