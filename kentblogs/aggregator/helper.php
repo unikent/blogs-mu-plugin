@@ -22,9 +22,7 @@ function kentblogs_aggregator_post_saved($id){
 }
 
 function kentblogs_aggregator_post_removed($id){
-	$blog_id = get_current_blog_id();
-	$post = get_post($id);
-	kentblogs_aggregator_remove_post($post, $blog_id);
+	kentblogs_aggregator_remove_post($id, get_current_blog_id());
 }
 
 /**
@@ -120,7 +118,7 @@ function kentblogs_aggregator_insert_post($post, $blog){
 	}
 	else {
 		// insert into the right place
-		array_unshift($aggregate_data, $post);
+		$aggregate_data = array($blog->blog_id.'_'.$post['id'] => $post) + $aggregate_data;
 		$aggregate_data = kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
 	}
 
@@ -129,15 +127,15 @@ function kentblogs_aggregator_insert_post($post, $blog){
 
 function kentblogs_aggregator_remove_post($post, $blog){
 
-	if(is_numeric($post)) $post = get_post($post);
+	if(is_numeric($post)) $post = get_post($post, 'ARRAY_A');
 	if(is_numeric($blog)) $blog = get_blog_details($blog);
 
 	if(empty($post) || empty($blog)) return false;
 
 	$aggregate_data = get_site_option('wp-multisite-post-aggregate');
 
-	if (isset($aggregate_data[$blog_id.'_'.$post['id']])) {
-		unset($aggregate_data[$blog_id.'_'.$post->id]);
+	if (isset($aggregate_data[$blog->blog_id.'_'.$post['ID']])) {
+		unset($aggregate_data[$blog->blog_id.'_'.$post['ID']]);
 	}
 
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
