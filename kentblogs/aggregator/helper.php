@@ -16,9 +16,11 @@ function kentblogs_aggregator_post_saved($id){
 	// add this post if it meets the criteria
 	$post = kentblogs_aggregator_format_post($post, $blog_id);
 
-	if(empty($post) && isset($aggregate_data[$blog_id.'_'.$id])) {
-		unset($aggregate_data[$blog_id.'_'.$id]);
-		update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+	if(empty($post)) {
+		if(isset($aggregate_data[$blog_id.'_'.$id])){
+			unset($aggregate_data[$blog_id.'_'.$id]);
+			update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+		}
 		return true;
 	}
 	
