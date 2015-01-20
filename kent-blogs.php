@@ -35,3 +35,22 @@ add_shortcode( 'showhide', 'kentblogs_remove_shortcode' );
 function kentblogs_remove_shortcode( $atts, $content = "" ){
     return $content;
 }
+
+
+function redirect_add_users() {
+    global $pagenow;
+
+    if ( 'user-new.php' === $pagenow ) {
+        if ( function_exists('admin_url') ) {
+            wp_redirect( admin_url('users.php?page=wpmu_ldap_adduser.functions.php') );
+        } else {
+            wp_redirect( get_option('siteurl') . '/wp-admin/' . 'users.php?page=wpmu_ldap_adduser.functions.php' );
+        }
+    }
+}
+if ( is_admin() ) {
+    add_action('admin_menu', 'redirect_add_users');
+}
+
+add_filter('show_network_site_users_add_new_form','__return_false');
+add_filter('show_network_site_users_add_existing_form','__return_false');
