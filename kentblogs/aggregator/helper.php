@@ -62,7 +62,7 @@ function kentblogs_aggregator_init_posts(){
 		restore_current_blog();
 	}
 
-	kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
+	$aggregate_data = kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
 
 	// create value
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
@@ -121,7 +121,7 @@ function kentblogs_aggregator_insert_post($post, $blog){
 	else {
 		// insert into the right place
 		array_unshift($aggregate_data, $post);
-		kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
+		$aggregate_data = kentblogs_aggregator_sort_and_trim_posts($aggregate_data);
 	}
 
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
@@ -143,11 +143,11 @@ function kentblogs_aggregator_remove_post($post, $blog){
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
 }
 
-function kentblogs_aggregator_sort_and_trim_posts(&$posts){
+function kentblogs_aggregator_sort_and_trim_posts($posts){
 	uasort($posts, function($a, $b){
 		if($a['date'] == $b['date']) return 0;
 		return ($a['date'] < $b['date']) ? 1 : -1;
 	});
 
-	$posts = array_slice($aggregate_data, 0, 60);
+	return array_slice($posts, 0, 60);
 }
