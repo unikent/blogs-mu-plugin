@@ -98,7 +98,7 @@ function kentblogs_aggregator_format_post($post, $blog){
 		'title' => $post->title,
 		'name' => $post->name,
 		'date' => strtotime($post->date),
-		'excerpt' => $post->excerpt_display,
+		'excerpt' => $post->excerpt,
 		'permalink' => $page->permalink,
 		'author' => $page->author,
 		'featured_image' => $featured_image,
