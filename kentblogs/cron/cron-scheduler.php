@@ -5,17 +5,11 @@ include "cron-helper.php";
 // When cron value is updated, something has either been scheduled or unscheduled. Queue next cron in central cron list
 add_action("update_option_cron", 'kentblogs_update_cron_schedule');
 
-add_action('init', function(){
-	if( defined('DOING_CRON') && DOING_CRON==true){
-		kentblogs_update_cron_schedule();
-	}
-});
-
 function kentblogs_update_cron_schedule(){
 
 	$crons = _get_cron_array();
 	if(sizeof($crons) !== 0){
-		ksort($crons);
+		//ksort($crons);
 		$timestamp = key($crons);
 		// Queue blog up in multisite cron list (with latest timestamp)
 		//error_log(get_current_blog_id() . ' : ' .  get_bloginfo('url') . ' : ' . $timestamp);

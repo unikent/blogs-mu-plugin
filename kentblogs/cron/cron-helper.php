@@ -49,13 +49,20 @@ function multisite_cron_init(){
 	$blogs = wp_get_sites(array('limit'=> 1000));
 
 	foreach($blogs as $blog){
+		switch_to_blog($blog['blog_id']);
+		$crons = _get_cron_array();
+		$timestamp = 0;
+		if(sizeof($crons) !== 0) {
+			$timestamp = key($crons);
+		}
 		// Newly inited blogs populate with timestamp 0 so they are all at top of pile
 		$data[$blog['blog_id']] = array(
 			"blogid" => $blog['blog_id'],
 			"path" => 'http://'.$blog['domain'].$blog['path'],
-			"timestamp" => 0,
+			"timestamp" => $timestamp,
 			"created" => time()
 		);
+		restore_current_blog();
 	}
 
 	// create value
