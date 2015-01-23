@@ -85,22 +85,24 @@ function kentblogs_manage_globals(){
     }
 
     ?>
-    <table class="form-table">
-        <tbody>
-            <tr>
-                <th scope="row"><label for="rebuild_cron">Rebuild Multisite Cron Queue</label></th>
-                <td>
-                    <input type="checkbox" id="rebuild_cron" name="rebuild_cron" value="true">
-                </td>
-            </tr>
-            <tr>
-                <th scope="row"><label for="rebuild_aggregate">Rebuild Multisite Aggregated Content</label></th>
-                <td>
-                    <input type="checkbox" id="rebuild_aggregate" name="rebuild_aggregate" value="true">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <p class="submit"><input type="submit" value="Perform Actions" class="button button-primary" id="submit" name="submit"></p>
+    <form>
+        <table class="form-table">
+            <tbody>
+                <tr>
+                    <th scope="row"><label for="rebuild_cron">Rebuild Multisite Cron Queue</label></th>
+                    <td>
+                        <input type="checkbox" id="rebuild_cron" name="rebuild_cron" value="true">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="rebuild_aggregate">Rebuild Multisite Aggregated Content</label></th>
+                    <td>
+                        <input type="checkbox" id="rebuild_aggregate" name="rebuild_aggregate" value="true">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="submit"><input type="submit" value="Perform Actions" class="button button-primary" id="submit" name="submit"></p>
+    </form>
 <?php
 }
