@@ -85,7 +85,7 @@ function kentblogs_manage_globals(){
     }
 
     ?>
-    <form>
+    <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
         <table class="form-table">
             <tbody>
                 <tr>
