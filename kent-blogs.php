@@ -54,3 +54,53 @@ if ( is_admin() ) {
 
 add_filter('show_network_site_users_add_new_form','__return_false');
 add_filter('show_network_site_users_add_existing_form','__return_false');
+
+
+add_action('network_admin_menu', 'kentblogs_add_manage_globals_page');
+
+function kentblogs_add_manage_globals_page(){
+    if (function_exists('add_submenu_page') && is_super_admin()) {
+        // does not use add_options_page, because it is site-wide configuration,
+        //  not blog-specific config, but side-wide
+        add_submenu_page('settings.php', 'Manage Kent Blogs Multisite Globals', 'Multisite Globals','manage_network','manage_kentblogs_globals','kentblogs_manage_globals');
+    }
+}
+
+function kentblogs_manage_globals(){
+    $actioned=false;
+    if (isset($_POST['submit'])) {
+
+        if(isset($_POST['rebuild_cron']) && $_POST['rebuild_cron']=='true'){
+            multisite_cron_init();
+            $actioned=true;
+        }
+        if(isset($_POST['rebuild_aggregate']) && $_POST['rebuild_aggregate']=='true'){
+            kentblogs_aggregator_init_posts();
+            $actioned=true;
+        }
+        if($actioned){
+            echo '<div id="message" class="updated fade"><p><strong>Global(s) Rebuilt</strong></p></div>';
+        }
+
+    }
+
+    ?>
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <th scope="row"><label for="rebuild_cron">Rebuild Multisite Cron Queue</label></th>
+                <td>
+                    <input type="checkbox" id="rebuild_cron" name="rebuild_cron" value="true">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="rebuild_aggregate">Rebuild Multisite Aggregated Content</label></th>
+                <td>
+                    <input type="checkbox" id="rebuild_aggregate" name="rebuild_aggregate" value="true">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="submit"><input type="submit" value="Perform Actions" class="button button-primary" id="submit" name="submit"></p>
+<?php
+}

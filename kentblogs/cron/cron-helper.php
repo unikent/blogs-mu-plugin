@@ -66,7 +66,7 @@ function multisite_cron_init(){
 	}
 
 	// create value
-	add_site_option('wp-multisite-crons', $data);
+	update_site_option('wp-multisite-crons', $data);
 
 	return $data;
 }
