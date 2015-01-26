@@ -21,6 +21,8 @@ Components:
 
 - [Subheadings](#subheadings)
 
+- [Additional Misc Functions](#misc)
+
  
 ## Installing
 
@@ -192,3 +194,14 @@ Adds a Subheading field to posts using a custom metabox. Value is stored in a "S
 can be retrieved using `get_post_meta({post_id},'SubHeading',true)` from within wordpress
 
 or it is surfaced in the [Thermal API](https://github.com/unikent/thermal-api) output for a post.
+
+
+## <a name="misc">Additional Misc Functions<a>
+
+- Disables pingbacks globaly by filtering the XMLRPC method
+ 
+- Cleans up shortcode markup left behind by removal of the ShowHide plugin
+ 
+- Removes additional add user forms and redirects add_user page to the LDAP aware add user page.
+
+- Provides a settinsg page to nework admisn to clear and regenerate globals like the [aggregator](#aggregator) and the [multisite cron queue](#cron)
