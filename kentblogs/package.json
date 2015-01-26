@@ -1,0 +1,28 @@
+{
+  "name": "blogs-mu-plugin",
+  "version": "1.0.0",
+  "author": "IS WEBDEV <is-webdev@kent.ac.uk>",
+  "homepage": "https://github.com/unikent/blogs-mu-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git://unikent/blogs-mu-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/unikent/blogs-mu-plugin/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-less": "~0.12.0",
+    "load-grunt-tasks": "~1.0.0",
+    "time-grunt": "~1.0.0"
+  }
+}

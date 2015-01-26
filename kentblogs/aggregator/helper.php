@@ -96,7 +96,7 @@ function kentblogs_aggregator_format_post($post, $blog){
 	return array(
 		'id' => $post->id,
 		'title' => $post->title,
-		'name' => $post->name,
+		'slug' => $post->slug,
 		'date' => strtotime($post->date),
 		'excerpt' => $post->excerpt,
 		'permalink' => $post->permalink,
