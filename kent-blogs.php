@@ -106,3 +106,6 @@ function kentblogs_manage_globals(){
     </form>
 <?php
 }
+
+//force ie edge mode
+header('X-UA-Compatible: IE=edge');

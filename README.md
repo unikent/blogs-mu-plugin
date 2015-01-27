@@ -198,6 +198,8 @@ or it is surfaced in the [Thermal API](https://github.com/unikent/thermal-api) o
 
 ## <a name="misc">Additional Misc Functions<a>
 
+- Forces IE Edge rendering to prevent compatibility mode on *intranet* sites when within kent domain
+
 - Disables pingbacks globaly by filtering the XMLRPC method
  
 - Cleans up shortcode markup left behind by removal of the ShowHide plugin
