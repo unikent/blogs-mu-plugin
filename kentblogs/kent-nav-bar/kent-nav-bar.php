@@ -6,7 +6,8 @@ if( WP_ENV=='local'){
 }else{
     wp_register_script('kent-nav-bar','//static.kent.ac.uk/navbar/kent-header-light.min.js',array(),null,true);
 }
-//
+
+wp_register_script('kent-nav-bar-twentyfourteen-theme-fix',plugins_url( 'nav-bar-conf.js' , __FILE__ ),array('jquery'),null,true);
 
 
 function kentblogs_nav_bar(){
@@ -28,6 +29,12 @@ function kentblogs_nav_bar(){
         }
     }
     wp_localize_script('kent-nav-bar','_kentbar',$options);
+    $theme = wp_get_theme();
+    $theme = $theme->get_template();
+    error_log(print_r($theme,true));
+    if( $theme == 'twentyfourteen'){
+        wp_enqueue_script('kent-nav-bar-twentyfourteen-theme-fix');
+    }
 }
 add_action( 'wp_enqueue_scripts', 'kentblogs_nav_bar');
 

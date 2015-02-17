@@ -13,18 +13,24 @@ function kentblogs_aggregator_post_saved($id){
 	$blog_id = get_current_blog_id();
 	$post = get_post($id);
 
-	// add this post if it meets the criteria
-	$post = kentblogs_aggregator_format_post($post, $blog_id);
+	//check blog is active
+	if(get_blog_status($blog_id,'public')==true && get_blog_status($blog_id,'archived')==false && get_blog_status($blog_id,'deleted')==false) {
 
-	if(empty($post)) {
-		if(isset($aggregate_data[$blog_id.'_'.$id])){
-			unset($aggregate_data[$blog_id.'_'.$id]);
-			update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+		// add this post if it meets the criteria
+		$post = kentblogs_aggregator_format_post($post, $blog_id);
+
+		if (empty($post)) {
+			if (isset($aggregate_data[$blog_id . '_' . $id])) {
+				unset($aggregate_data[$blog_id . '_' . $id]);
+				update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+			}
+			return true;
 		}
-		return true;
+
+		kentblogs_aggregator_insert_post($post, $blog_id);
 	}
-	
-	kentblogs_aggregator_insert_post($post, $blog_id);
+
+	return true;
 }
 
 /**
@@ -37,7 +43,7 @@ function kentblogs_aggregator_init_posts(){
 	remove_filter( 'the_content', 'rc_process_post' );
 
 	$aggregate_data = array();
-	$blogs = wp_get_sites(array('limit'=> 1000));
+	$blogs = wp_get_sites(array('public'=>true,'archived'=>false,'deleted'=>false,'spam'=>false,'limit'=> 1000));
 
 	foreach($blogs as $blog) {
 		// get last month's posts
@@ -137,3 +143,27 @@ function kentblogs_aggregator_sort_and_trim_posts($posts){
 
 	return array_slice($posts, 0, 60);
 }
+
+
+
+function kentblogs_remove_from_aggregator($id){
+
+	$aggregate_data = get_site_option('wp-multisite-post-aggregate');
+
+	if($aggregate_data === false) {
+		return;
+	}
+
+	foreach(array_keys($aggregate_data) as $key ){
+		$keyparts = explode('_',$key);
+
+		if($keyparts[0]==$id){
+			unset($aggregate_data[$key]);
+		}
+	}
+	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
+}
+
+add_action("archive_blog", "kentblogs_remove_from_aggregator");
+add_action("delete_blog", "kentblogs_remove_from_aggregator");
+add_action("deactivate_blog", "kentblogs_remove_from_aggregator");

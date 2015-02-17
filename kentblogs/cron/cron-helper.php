@@ -46,7 +46,7 @@ function multisite_cron_get_next($amount = 5)
 function multisite_cron_init(){
 
 	$data = array();
-	$blogs = wp_get_sites(array('limit'=> 1000));
+	$blogs = wp_get_sites(array('public'=>true,'archived'=>false,'deleted'=>false,'spam'=>false,'limit'=> 1000));
 
 	foreach($blogs as $blog){
 		switch_to_blog($blog['blog_id']);
