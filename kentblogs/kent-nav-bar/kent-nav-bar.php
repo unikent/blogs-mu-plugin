@@ -31,7 +31,6 @@ function kentblogs_nav_bar(){
     wp_localize_script('kent-nav-bar','_kentbar',$options);
     $theme = wp_get_theme();
     $theme = $theme->get_template();
-    error_log(print_r($theme,true));
     if( $theme == 'twentyfourteen'){
         wp_enqueue_script('kent-nav-bar-twentyfourteen-theme-fix');
     }
