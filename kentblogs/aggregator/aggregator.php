@@ -1,7 +1,7 @@
 <?php 
 
 include 'helper.php';
-include '/../vendor/MM_MediaAccess.php';
+include '../vendor/MM_MediaAccess.php';
 
 $kb_aggregator_media_access = new HaddowG\MetaMaterial\MM_MediaAccess(array(
     'name'=>'fdefault',
