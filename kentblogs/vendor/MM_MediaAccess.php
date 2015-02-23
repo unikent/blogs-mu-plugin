@@ -1,5 +1,4 @@
 <?php
-namespace HaddowG\MetaMaterial;
 
 /**
  * @package     MetaMaterial
@@ -727,3 +726,4 @@ class MM_MediaAccess
         return $sizes;
     }
 }
+?>

@@ -1,9 +1,8 @@
 <?php 
 
 include 'helper.php';
-include '../vendor/MM_MediaAccess.php';
 
-$kb_aggregator_media_access = new HaddowG\MetaMaterial\MM_MediaAccess(array(
+$kb_aggregator_media_access = new MM_MediaAccess(array(
     'name'=>'fdefault',
     'file_type'=>'image',
     'buttonText'=>'Select Image',

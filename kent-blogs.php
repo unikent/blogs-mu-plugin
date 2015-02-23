@@ -1,5 +1,5 @@
 <?php
-
+include_once('kentblogs/vendor/MM_MediaAccess.php');
 include_once('kentblogs/cron/cron-scheduler.php');
 include_once('kentblogs/kent-nav-bar/kent-nav-bar.php');
 include_once('kentblogs/login-form/login-form.php');
