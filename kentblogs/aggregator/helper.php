@@ -161,11 +161,14 @@ function kentblogs_get_aggregator_default_image(){
 
 
 	if(empty($img)) {
-		$img = 'http://blogs.kent.ac.uk/wp-content/mu-plugins/kentblogs/aggregator/featured_default.png';
+		$img = '//blogs.kent.ac.uk/wp-content/mu-plugins/kentblogs/aggregator/featured_default.png';
 	}else{
-        $img = wp_get_attachment_image_src($img,'large',false);
-        $img = $img[0];
-    }
+		$img = wp_get_attachment_image_src($img,'large',false);
+		$img = $img[0];
+	}
+
+	// Remove image protocol (http/https) so browser can auto detect it.
+	$img = str_replace(array('https://', 'http://'), '//', $img);
 
 	return array(
 		'id' => 0,

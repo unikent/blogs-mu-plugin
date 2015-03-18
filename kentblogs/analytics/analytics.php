@@ -12,11 +12,11 @@ echo "<script type='text/javascript'>
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('blogs.create', 'UA-21420000-13', 'auto');
+    ga('create', 'UA-21420000-13', 'auto', {'name':'blogs'});
     ga('blogs.require', 'displayfeatures');
     ga('blogs.require', 'linkid', 'linkid.js');
     ga('blogs.send', 'pageview');
-    ga('central.create', 'UA-54179016-1', 'auto');
+    ga('create', 'UA-54179016-1', 'auto', {'name':'central'});
     ga('central.require', 'displayfeatures');
     ga('central.require', 'linkid', 'linkid.js');
     ga('central.send', 'pageview');

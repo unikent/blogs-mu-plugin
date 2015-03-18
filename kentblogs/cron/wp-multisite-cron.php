@@ -24,8 +24,11 @@ require_once( dirname( __FILE__ ) . '/../../../../wp/wp-load.php' );
 // Load driver
 require_once( 'cron-helper.php' );
 
+// Count of crons to run (increased from 5 to 10)
+$cron_count = 10;
+
 // Get crons to run
-$crons_to_run = multisite_cron_get_next(5);
+$crons_to_run = multisite_cron_get_next($cron_count);
 
 // No crons to run
 if(sizeof($crons_to_run)===0){
@@ -35,7 +38,7 @@ if(sizeof($crons_to_run)===0){
 
 // Run some CRON's :D
 
-echo "\nRunning next 5 crons \n\n";
+echo "\nRunning next {$cron_count} crons [".time()."] \n\n";
 
 foreach($crons_to_run as $cron){
 
@@ -46,7 +49,7 @@ foreach($crons_to_run as $cron){
 		$cron['path']= rtrim($cron['path'], '/');
 
 		$path = $cron['path'].'/wp-cron.php';
-		echo "Curl: {$path}  [Blog: {$cron['blogid']} - CRON scheduled for " .$cron['timestamp'].']';
+		echo "Curl: {$path}  [Blog: {$cron['blogid']} - CRON was scheduled for " .$cron['timestamp'].']';
 		
 		$success = wp_remote_get( $path );
 
