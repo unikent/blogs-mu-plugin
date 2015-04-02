@@ -193,7 +193,7 @@ function kentblogs_make_images_https_aware($featured_image){
 	foreach($featured_image['sizes'] as $size => $img){
 
 		// Remove image protocol (http/https) so browser can auto detect it.
-		$image = str_replace(array('https://', 'http://'), '//', $img['url']));
+		$image = str_replace(array('https://', 'http://'), '//', $img['url']);
 		$featured_image['sizes'][$size]['url'] = $image;
 	}
 
