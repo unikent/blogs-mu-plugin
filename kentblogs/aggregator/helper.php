@@ -109,7 +109,12 @@ function kentblogs_aggregator_format_post($post, $blog){
 	if (empty($featured_image)){
 		$featured_image  = kentblogs_get_aggregator_default_image();
 	}else{
-		$featured_image  = kentblogs_make_images_https_aware($featured_image);
+        if(isset($featured_image['sizes']) && is_array($featured_image['sizes']) && !empty($featured_image['sizes']) ){
+            $featured_image  = kentblogs_make_images_https_aware($featured_image);
+        }else{
+            $featured_image  = kentblogs_get_aggregator_default_image();
+        }
+
 	}
 
 	return array(
@@ -188,7 +193,7 @@ function kentblogs_get_aggregator_default_image(){
 }
 
 function kentblogs_make_images_https_aware($featured_image){
-
+    $featured_image = (array) $featured_image;
 	// Foreach size of image, apply the http/https fix and save it back
 	foreach($featured_image['sizes'] as $size => $img){
 
