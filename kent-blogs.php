@@ -107,5 +107,13 @@ function kentblogs_manage_globals(){
 <?php
 }
 
+// Base path fixer.
+// Without this wp_upload_dir returns none writable path.  
+add_filter('upload_dir', function($opt){
+    $opt['basedir'] = str_replace('/web/wp/wp-content/blogs.dir/', '/web/app/blogs.dir/', $opt['basedir']);
+    $opt['path'] = str_replace('/web/wp/wp-content/blogs.dir/', '/web/app/blogs.dir/', $opt['path']);
+    return $opt;
+});
+
 //force ie edge mode
 header('X-UA-Compatible: IE=edge');
