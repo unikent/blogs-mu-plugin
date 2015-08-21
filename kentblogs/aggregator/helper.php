@@ -39,6 +39,20 @@ function kentblogs_aggregator_post_saved($id){
  */
 function kentblogs_aggregator_init_posts(){
 
+	global $id;
+
+	/*
+	 * Near major incident 21/08/2015:
+	 *
+	 * the global $id is modified when we request posts within this function so we must save and restore it
+	 * as stupidly wordpress uses $id during a site deactivation action (on which we trigger this function),
+	 * and we can otherwise end up deactivating a random blog based on the id of the last post accessed.
+	 *
+	 */
+
+	//backup global id
+	$backup_id = $id;
+
 	// remove report concern filter
 	remove_filter( 'the_content', 'rc_process_post' );
 
@@ -85,6 +99,9 @@ function kentblogs_aggregator_init_posts(){
 
 	// re-add report concern filter
 	add_filter( 'the_content', 'rc_process_post' );
+
+	//restore global id back;
+	$id = $backup_id;
 
 	return $aggregate_data;
 }
