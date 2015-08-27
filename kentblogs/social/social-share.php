@@ -50,6 +50,7 @@ class KentSocialShare {
 // if enabled,
 add_filter('the_content', function($html){
 
+	if(is_single())
 
 	$kSocialShare = new KentSocialShare();
 	$markup = $kSocialShare->generateSocialLinks('URL', 'TITLE');
@@ -59,5 +60,5 @@ add_filter('the_content', function($html){
 	//requires fontawsome or kent font
 
 
-	return $html;
+	return $markup. $html . $markup;
 });
