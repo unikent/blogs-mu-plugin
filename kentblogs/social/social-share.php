@@ -45,20 +45,18 @@ class KentSocialShare {
 	}
 
 }
+function kentblogs_addSocialShareIcons(){
 
+		$kSocialShare = new KentSocialShare();
+		$markup = $kSocialShare->generateSocialLinks('URL', 'TITLE');
+		//hook to WP top/bottom on posts depending on settings
+		// Ad widget while we're at it
+
+		//requires fontawsome or kent font
+		return $markup. $html . $markup;
+}
 // check options
 // if enabled,
-add_filter('the_content', function($html){
-
-	if(is_single())
-
-	$kSocialShare = new KentSocialShare();
-	$markup = $kSocialShare->generateSocialLinks('URL', 'TITLE');
-	//hook to WP top/bottom on posts depending on settings
-	// Ad widget while we're at it
-
-	//requires fontawsome or kent font
-
-
-	return $markup. $html . $markup;
-});
+if(is_single()){
+	add_filter('the_content', 'kentblogs_addSocialShareIcons');
+}

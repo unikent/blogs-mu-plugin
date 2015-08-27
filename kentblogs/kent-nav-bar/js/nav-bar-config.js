@@ -1,3 +1,0 @@
-/**
- * Blogs Nav Bar Config
- */

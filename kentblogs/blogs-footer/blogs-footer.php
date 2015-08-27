@@ -66,7 +66,7 @@ function kentblogs_add_footer(){
 <?php
 }
 
-add_filter('wp_footer','kentblogs_add_footer');
+add_filter('wp_footer','kentblogs_add_footer',99);
 
 function kentblogs_footer_scripts(){
     wp_enqueue_style('kent-blogs-footer');

@@ -6,8 +6,9 @@ if( WP_ENV=='local'){
 }else{
     wp_register_script('kent-nav-bar','//static.kent.ac.uk/navbar/kent-header-light.min.js',array(),null,true);
 }
-//
 
+wp_register_script('kent-nav-bar-twentyfourteen-theme-fix',plugins_url( 'nav-bar-twentyfourteen.js' , __FILE__ ),array('jquery'),null,true);
+wp_register_script('kent-nav-bar-twentyfifteen-theme-fix',plugins_url( 'nav-bar-twentyfifteen.js' , __FILE__ ),array('jquery'),null,true);
 
 function kentblogs_nav_bar(){
     wp_enqueue_script('kent-nav-bar');
@@ -28,8 +29,21 @@ function kentblogs_nav_bar(){
         }
     }
     wp_localize_script('kent-nav-bar','_kentbar',$options);
+    $theme = wp_get_theme();
+    $theme = $theme->get_template();
+    if( $theme == 'twentyfourteen'){
+        wp_enqueue_script('kent-nav-bar-twentyfourteen-theme-fix');
+    }
+    if( $theme == 'twentyfifteen'){
+        wp_dequeue_script('twentyfifteen-script');
+        wp_enqueue_script('kent-nav-bar-twentyfifteen-theme-fix');
+        wp_localize_script( 'kent-nav-bar-twentyfifteen-theme-fix', 'screenReaderText', array(
+            'expand'   => '<span class="screen-reader-text">' . __( 'expand child menu', 'twentyfifteen' ) . '</span>',
+            'collapse' => '<span class="screen-reader-text">' . __( 'collapse child menu', 'twentyfifteen' ) . '</span>',
+        ) );
+    }
 }
-add_action( 'wp_enqueue_scripts', 'kentblogs_nav_bar');
+add_action( 'wp_enqueue_scripts', 'kentblogs_nav_bar',99);
 
 function kentblogs_nav_bar_options_menu() {
     if (function_exists('add_submenu_page') && is_super_admin()) {
