@@ -24,12 +24,7 @@ require_once( dirname( __FILE__ ) . '/../../../../wp/wp-load.php' );
 // Load driver
 require_once('popular.php');
 
-$popular_data = kentblogs_popular_get_posts();
+kentblogs_popular_generate_posts();
 
-if(empty($popular_data)){
-	echo "no data available.";
-	die();
-}
+die('done.');
 
-header("Content-Type: application/json");
-echo json_encode($popular_data);

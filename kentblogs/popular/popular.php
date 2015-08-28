@@ -4,9 +4,17 @@
  * Get most popular blog posts
  */
 function kentblogs_popular_get_posts() {
-	$posts = array();
+	$posts = get_site_option('wp-multisite-post-popular');
 
-	//TODO try getting from cache first
+	if($posts === false){
+		$posts = kentblogs_popular_generate_posts();
+	}
+
+	return $posts;
+}
+
+function kentblogs_popular_generate_posts() {
+	$posts = array();
 
 	$analytics = kentblogs_popular_get_analytics();
 
@@ -46,6 +54,8 @@ function kentblogs_popular_get_posts() {
 			restore_current_blog();
 		}
 	}
+
+	update_site_option('wp-multisite-post-popular', $posts);
 	
 	return !empty($posts) ? $posts : false;
 }
