@@ -6,7 +6,7 @@
 function kentblogs_popular_get_posts() {
 	$posts = get_site_option('wp-multisite-post-popular');
 
-	if($posts === false){
+	if($posts === false  || empty($posts) ){
 		$posts = kentblogs_popular_generate_posts();
 	}
 
@@ -20,7 +20,7 @@ function kentblogs_popular_generate_posts() {
 
 	// get top ids from analytics
 	$limit = 3;
-	$current_blog_id = get_current_blog_id();
+
 	foreach ($analytics['rows'] as $row) {
 		$post_url = $row[1];
 		if(isset($post_url) && preg_match('/blogs.kent.ac.uk\/([a-z0-9-]+)\/(.+)/', $post_url, $matches)){
@@ -31,7 +31,7 @@ function kentblogs_popular_generate_posts() {
 			$post_url = $matches[2];
 			$post_id = url_to_postid($post_url);
 
-			if ($post_id === 0 || isset($posts[$post_id])) {
+			if ($post_id === 0 || isset($posts[$blog_id . '-' . $post_id])) {
 				restore_current_blog();
 				continue;
 			}
@@ -44,7 +44,7 @@ function kentblogs_popular_generate_posts() {
 				continue;
 			}
 
-			$posts[$post_id] = $post;
+			$posts[$blog_id . '-' . $post_id] = $post;
 			$limit -= 1;
 			
 			if ($limit === 0) {
@@ -111,8 +111,6 @@ function kentblogs_popular_get_analytics() {
 			// do nothing
 		}
 	}
-	
+
 	return !empty($ga_data) ? $ga_data : false;
-	
-	return $results;
 }
