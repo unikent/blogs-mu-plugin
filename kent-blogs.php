@@ -4,7 +4,6 @@ include_once('kentblogs/cron/cron-scheduler.php');
 include_once('kentblogs/kent-nav-bar/kent-nav-bar.php');
 include_once('kentblogs/login-form/login-form.php');
 include_once('kentblogs/analytics/analytics.php');
-//include_once('kentblogs/report-concern/report-concern.php');
 include_once('kentblogs/subheadings/subheadings.php');
 include_once('kentblogs/blogs-footer/blogs-footer.php');
 include_once('kentblogs/social/social-share.php');
@@ -115,6 +114,25 @@ add_filter('upload_dir', function($opt){
     $opt['path'] = str_replace('/web/wp/wp-content/blogs.dir/', '/web/app/blogs.dir/', $opt['path']);
     return $opt;
 });
+
+
+function kentblogs_blog_options_menu() {
+    if (function_exists('add_submenu_page') && is_admin()) {
+        add_submenu_page('options-general.php', 'Kent Blog Options', 'Kent Blog Options','manage_options', basename(__FILE__), 'kentblogs_blog_options');
+    }
+}
+add_action('admin_menu','kentblogs_blog_options_menu');
+
+function kentblogs_blog_options(){
+?>
+<form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
+<?php
+    do_action('kentblogs_blog_options_page');
+?>
+<p class="submit"><input type="submit" value="Save Changes" class="button button-primary" id="submit" name="update_kentblog_options"></p>
+</form>
+<?php
+}
 
 //force ie edge mode
 header('X-UA-Compatible: IE=edge');

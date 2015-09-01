@@ -1,5 +1,7 @@
 <?php
 
+wp_register_style('kent-blogs-social-buttons',plugins_url( 'kent-blogs-social-buttons.css' , __FILE__ ));
+
 class KentSocialShare {
 
 	public $services = array(
@@ -38,7 +40,7 @@ class KentSocialShare {
 			$link = str_replace(array('{url}', '{title}'), array($url, $title), $service['link']);
 			$icon =  $service['icon'];
 
-			$html .= "<li><a href='{$link}' target='_blank'><i class='kf-{$icon}' title='Share to {$service['title']}'></i></a></li>";
+			$html .= "<li><a href='{$link}' target='_blank'><i class='ksocial-{$icon}' title='Share via {$service['name']}'></i></a></li>";
 		}
 
 		return '<ul class="kent-social-links">'.$html.'</ul>';
@@ -46,31 +48,80 @@ class KentSocialShare {
 
 }
 function kentblogs_addSocialShareIcons($html){
+	global $post;
 	// Only apply on single posts
-	if(!is_single()) return $html;
+	if(!is_singular('post')) return $html;
 
-	// check options
-	// if enabled,
+
+	$sharing = get_option('kb_social_sharing');
+
+	if(empty($sharing)){
+		return $html;
+	}
+
 	
 
 	$kSocialShare = new KentSocialShare();
-	$markup = $kSocialShare->generateSocialLinks('URL', 'TITLE');
-	//hook to WP top/bottom on posts depending on settings
-	// Ad widget while we're at it
+	$markup = $kSocialShare->generateSocialLinks(get_permalink($post->ID), $post->post_title);
 
-	//requires fontawsome or kent font
-	return $markup. $html . $markup;
+	switch($sharing){
+		case "above":
+			return $markup . $html;
+			break;
+		case "below":
+			return $html . $markup;
+			break;
+		case "both":
+			return $markup . $html . $markup;
+			break;
+	}
+
+	return $html;
 }
 
 add_filter('the_content', 'kentblogs_addSocialShareIcons');
 
-/*
-TODO:
+function kentblogs_add_social_scripts(){
+	$sharing = get_option('kb_social_sharing');
 
-* Add admin options [on/off] + show icons [above/below/both] the content
-* Grab the url/title of the page & generate links with em
-* Create icon set (just social icons) and bundle with css for display in all themes (just include in to this)
-* make pretty with css [ grey / white like on news?]
-* Unregister/reregister hook on thermal api (so we dont add em to the API)
+	if(!empty($sharing)){
+		wp_enqueue_style('kent-blogs-social-buttons');
+	}
+}
+add_action('wp_enqueue_scripts', 'kentblogs_add_social_scripts', 101);
 
-*/
+add_action('kentblogs_blog_options_page','kentblogs_sharing_button_options',15);
+
+function kentblogs_sharing_button_options(){
+
+	if (isset($_POST['update_kentblog_options'])) {
+		if(isset($_POST['kb_social_sharing']) && !empty($_POST['kb_social_sharing'])){
+			update_option('kb_social_sharing',$_POST['kb_social_sharing']);
+		}else{
+			delete_option('kb_social_sharing');
+		}
+	}
+
+	?>
+	<div class=wrap>
+		<h2>Social Sharing Options</h2>
+		<table class="form-table">
+			<tbody>
+			<tr>
+				<th>
+					<label for="kb_social_sharing">Social Sharing Buttons</label>
+				</th>
+				<td>
+					<select id="kb_social_sharing" name="kb_social_sharing">
+						<option value="">None - Disabled</option>
+						<option value="above"<?php echo ($_POST['kb_social_sharing'] == "above")?'selected="selected"':''; ?>>Above Post</option>
+						<option value="below"<?php echo ($_POST['kb_social_sharing'] == "below")?'selected="selected"':''; ?>>Below Post</option>
+						<option value="both"<?php echo ($_POST['kb_social_sharing'] == "both")?'selected="selected"':''; ?>>Above &amp; below Post</option>
+					</select>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<?php
+}
