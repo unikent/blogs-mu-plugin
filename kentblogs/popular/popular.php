@@ -28,6 +28,14 @@ function kentblogs_popular_generate_posts() {
 			$blog_slug = $matches[1];
 			$blog_id = get_id_from_blogname($blog_slug);
 			switch_to_blog($blog_id);
+
+			$excluded = get_option('kb_exclude_from_aggregator');
+
+			if(!empty($excluded)) {
+				restore_current_blog();
+				continue;
+			}
+
 			$post_url = $matches[2];
 			$post_id = url_to_postid($post_url);
 
