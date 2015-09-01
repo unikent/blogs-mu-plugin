@@ -10,6 +10,7 @@ include_once('kentblogs/social/social-share.php');
 include_once('kentblogs/responsive-videos/responsive-videos.php');
 include_once('kentblogs/aggregator/aggregator.php');
 include_once('kentblogs/popular/popular.php');
+include_once('kentblogs/shortcodes/shortcodes.php');
 
 /*
  * Disable Trackbacks/Pingbacks
@@ -36,6 +37,11 @@ add_shortcode( 'showhide', 'kentblogs_remove_shortcode' );
 function kentblogs_remove_shortcode( $atts, $content = "" ){
     return $content;
 }
+
+
+wp_oembed_add_provider( '!https?://(www\.)?ted.com/talks/view/id/.+!i', 'http://www.ted.com/talks/oembed.json', true );
+wp_oembed_add_provider( '!https?://(www\.)?ted.com/talks/[a-zA-Z\-\_]+\.html!i', 'http://www.ted.com/talks/oembed.json', true );
+
 
 
 function redirect_add_users() {
