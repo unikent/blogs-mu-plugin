@@ -8,6 +8,7 @@ include_once('kentblogs/analytics/analytics.php');
 include_once('kentblogs/subheadings/subheadings.php');
 include_once('kentblogs/blogs-footer/blogs-footer.php');
 include_once('kentblogs/aggregator/aggregator.php');
+include_once('kentblogs/popular/popular.php');
 
 
 /*
