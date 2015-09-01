@@ -17,13 +17,7 @@ add_action("archive_blog", "kentblogs_aggregator_init_posts");
 add_action("delete_blog", "kentblogs_aggregator_init_posts");
 add_action("deactivate_blog", "kentblogs_aggregator_init_posts");
 
-
-function kentblogs_aggregator_options_menu() {
-    if (function_exists('add_submenu_page') && is_admin()) {
-        add_submenu_page('options-general.php', 'Aggregator Options', 'Blogs Aggregator','manage_options', basename(__FILE__), 'kentblogs_aggregator_options');
-    }
-}
-add_action('admin_menu','kentblogs_aggregator_options_menu');
+add_action('kentblogs_blog_options_page','kentblogs_aggregator_options',20);
 
 function kentblogs_aggregator_options(){
     global $kb_aggregator_media_access;
@@ -32,7 +26,7 @@ function kentblogs_aggregator_options(){
     $ex = get_option('kb_exclude_from_aggregator');
     $img = get_option('kb_default_aggregator_img');
 
-    if (isset($_POST['update_aggregator'])) {
+    if (isset($_POST['update_kentblog_options'])) {
         if(isset($_POST['kb_exclude_from_aggregator'])){
             update_option('kb_exclude_from_aggregator',$_POST['kb_exclude_from_aggregator']);
             $changed = (((!empty($ex)) && ($ex!==$_POST['kb_exclude_from_aggregator'])) || (empty($ex) && (!empty($_POST['kb_exclude_from_aggregator']))));
@@ -66,7 +60,6 @@ function kentblogs_aggregator_options(){
     </script>
     <div class=wrap>
         <h2>Blogs Aggregator Options</h2>
-        <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
             <table class="form-table">
                 <tbody>
                 <tr>
@@ -92,8 +85,6 @@ function kentblogs_aggregator_options(){
                 </tr>
                 </tbody>
             </table>
-            <p class="submit"><input type="submit" value="Save Changes" class="button button-primary" id="submit" name="update_aggregator"></p>
-        </form>
     </div>
 <?php
 }

@@ -11,6 +11,9 @@ module.exports = function(grunt) {
         files: {
           'blogs-footer/kent-blogs-footer.css': [
             'blogs-footer/kent-blogs-footer.less'
+          ],
+          'social/kent-blogs-social-buttons.css': [
+            'social/kent-blogs-social-buttons.less'
           ]
         },
         options: {

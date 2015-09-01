@@ -53,8 +53,8 @@ function kentblogs_aggregator_init_posts(){
 	//backup global id
 	$backup_id = $id;
 
-	// remove report concern filter
-	remove_filter( 'the_content', 'rc_process_post' );
+	// remove unwanted filters
+	remove_filter( 'the_content', 'kentblogs_addSocialShareIcons' );
 
 	$aggregate_data = array();
 	$blogs = wp_get_sites(array('public'=>true,'archived'=>false,'deleted'=>false,'spam'=>false,'limit'=> 1000));
@@ -97,8 +97,8 @@ function kentblogs_aggregator_init_posts(){
 	// create value
 	update_site_option('wp-multisite-post-aggregate', $aggregate_data);
 
-	// re-add report concern filter
-	add_filter( 'the_content', 'rc_process_post' );
+	// re-add unwanted filters
+	add_filter( 'the_content', 'kentblogs_addSocialShareIcons' );
 
 	//restore global id back;
 	$id = $backup_id;
