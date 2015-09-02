@@ -39,7 +39,7 @@ function multisite_cron_get_next($amount = 5)
 		return array();
 	}
 
-	return array_slice($data, 0, 5, true);
+	return array_slice($data, 0, $amount, true);
 }
 
 // Init blog crons
