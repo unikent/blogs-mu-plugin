@@ -11,6 +11,8 @@ include_once('kentblogs/responsive-videos/responsive-videos.php');
 include_once('kentblogs/aggregator/aggregator.php');
 include_once('kentblogs/popular/popular.php');
 include_once('kentblogs/shortcodes/shortcodes.php');
+include_once('kentblogs/site-categories/site-categories.php');
+
 
 /*
  * Disable Trackbacks/Pingbacks
