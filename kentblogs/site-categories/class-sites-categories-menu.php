@@ -49,7 +49,7 @@ class KentBlogs_Sites_Categories_Menu
             $cats = array();
             foreach( $_POST['cat_name'] as $key => $value )
             {
-                $cats[$key] = array('new'=>$value, 'old'=>(array_key_exists($key,$current)?$current[$key]['name']:null));
+                $cats[$key] = array('new'=>$value, 'old'=>(is_array($current) && array_key_exists($key,$current)?$current[$key]['name']:null));
             }
 
             usort( $cats, array( $this, 'cmp' ) );

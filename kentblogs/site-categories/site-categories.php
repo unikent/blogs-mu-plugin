@@ -142,7 +142,7 @@ class KentBlogs_Multisite_Categories
 			$val = $this->do_mature_to_name($_POST['input_site_cat']);
 			update_blog_option($_POST['id'], 'site_category', $val);
 			update_blog_status(absint($_POST['id']), 'mature', $_POST['input_site_cat']);
-			get_blog_status(absint($_POST['id']), 'mature');
+			$this->get_blog_list(true);
 		}
 	}
 
@@ -237,14 +237,14 @@ HTML;
 	 *
 	 * @return array All blogs IDs
 	 */
-	public static function get_blog_list()
+	public static function get_blog_list($clear=false)
 	{
 		$blogs = get_site_transient('multisite_blog_list');
-		if (FALSE === $blogs) {
+		if (FALSE === $blogs || $clear) {
 			$time = apply_filters('msc_transient_time', self::$sites_transient);
 			global $wpdb;
 			$limit = '';
-//$limit = "LIMIT $start, $num";
+
 			$blogs = $wpdb->get_results(
 				$wpdb->prepare("
 SELECT blog_id, mature
