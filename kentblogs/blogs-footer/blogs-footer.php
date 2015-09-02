@@ -4,8 +4,8 @@ wp_register_style('kent-blogs-footer',plugins_url( 'kent-blogs-footer.css' , __F
 
 function kentblogs_add_footer(){
 	$blog_details = get_blog_details();
-	$post_id = get_the_id($post);
-	$post_title = get_the_title($post);
+	$post_id = get_the_id();
+	$post_title = get_the_title();
 
 	$body = array(
 		'Report concern from:',
