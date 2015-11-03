@@ -49,9 +49,13 @@ class KentSocialShare {
 }
 function kentblogs_addSocialShareIcons($html){
 	global $post;
-	// Only apply on single posts
-	if(!is_singular('post')) return $html;
-
+	
+	// show everywhere if not
+	if(get_option('kb_social_sharing_homepage') != 'show'){
+		// Only apply on single posts
+		if(!is_singular('post')) return $html;
+	}
+	
 
 	$sharing = get_option('kb_social_sharing');
 
@@ -96,11 +100,17 @@ function kentblogs_sharing_button_options(){
 
 	if (isset($_POST['update_kentblog_options'])) {
 		if(isset($_POST['kb_social_sharing']) && !empty($_POST['kb_social_sharing'])){
-			update_option('kb_social_sharing',$_POST['kb_social_sharing']);
+			update_option('kb_social_sharing', $_POST['kb_social_sharing']);
+			update_option('kb_social_sharing_homepage', $_POST['kb_social_sharing_homepage']);
 		}else{
 			delete_option('kb_social_sharing');
+			delete_option('kb_social_sharing_homepage');
 		}
 	}
+
+	// Get current options
+	$kb_social_sharing = isset($_POST['kb_social_sharing']) ? $_POST['kb_social_sharing'] : get_option('kb_social_sharing');
+	$kb_social_sharing_homepage = isset($_POST['kb_social_sharing_homepage']) ? $_POST['kb_social_sharing_homepage'] : get_option('kb_social_sharing_homepage');
 
 	?>
 	<div class=wrap>
@@ -114,12 +124,17 @@ function kentblogs_sharing_button_options(){
 				<td>
 					<select id="kb_social_sharing" name="kb_social_sharing">
 						<option value="">None - Disabled</option>
-						<option value="above"<?php echo ($_POST['kb_social_sharing'] == "above")?'selected="selected"':''; ?>>Above Post</option>
-						<option value="below"<?php echo ($_POST['kb_social_sharing'] == "below")?'selected="selected"':''; ?>>Below Post</option>
-						<option value="both"<?php echo ($_POST['kb_social_sharing'] == "both")?'selected="selected"':''; ?>>Above &amp; below Post</option>
+						<option value="above"<?php echo ($kb_social_sharing == "above")?'selected="selected"':''; ?>>Above Post</option>
+						<option value="below"<?php echo ($kb_social_sharing == "below")?'selected="selected"':''; ?>>Below Post</option>
+						<option value="both"<?php echo ($kb_social_sharing == "both")?'selected="selected"':''; ?>>Above &amp; below Post</option>
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<label for="kb_social_sharing_homepage"><input type='checkbox' name="kb_social_sharing_homepage" value="show" <?php echo ($kb_social_sharing_homepage == "show")?'checked="checked"':''; ?>>Show shareing buttons on homepage</label>
+				</td>
 			</tbody>
 		</table>
 	</div>
