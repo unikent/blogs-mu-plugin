@@ -133,7 +133,7 @@ function kentblogs_sharing_button_options(){
 			<tr>
 				<th></th>
 				<td>
-					<label for="kb_social_sharing_homepage"><input type='checkbox' name="kb_social_sharing_homepage" value="show" <?php echo ($kb_social_sharing_homepage == "show")?'checked="checked"':''; ?>>Show shareing buttons on homepage</label>
+					<label for="kb_social_sharing_homepage"><input type='checkbox' name="kb_social_sharing_homepage" value="show" <?php echo ($kb_social_sharing_homepage == "show")?'checked="checked"':''; ?>>Show sharing buttons on homepage</label>
 				</td>
 			</tbody>
 		</table>
