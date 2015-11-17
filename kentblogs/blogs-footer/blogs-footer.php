@@ -73,23 +73,9 @@ add_filter('wp_footer','kentblogs_add_footer',99);
 
 
 function kentblogs_generatefooter(){
-	global $post;
-
-	$blog_details = get_blog_details();
-	$post_id = get_the_id($post);
-	$post_title = get_the_title($post);
-
-	$body = array(
-		'Report concern from:',
-		'Blog URL: ' . $blog_details->siteurl,
-		'Post ID: ' . ($post_id ? $post_id : 'N/A'),
-		'Post Title: ' . ($post_title ? $post_title : 'N/A'),
-	);
-
-	$body = implode("%0D%0A", $body);
-	?>
-	<div id="kent-blogs-footer">The views expressed in this blog are not necessarily those of the University of Kent. View <a href="http://www.kent.ac.uk/is/regulations/it/index.html?tab=blogs-conditions-of-use" target="_blank">Conditions of use</a> and <a href="http://www.kent.ac.uk/itservices/email/blogs.html" target="_blank">Guidelines</a>.
-		<a href="mailto:qands@kent.ac.uk?subject=Report Concern from blogs.kent&body=<?php echo $body; ?>">Report concern</a>
+?>
+	<div id="kent-blogs-footer">The views expressed in this blog are not necessarily those of the University of Kent. View <a href="//www.kent.ac.uk/is/regulations/it/index.html?tab=blogs-conditions-of-use" target="_blank">Conditions of use</a> and <a href="http://www.kent.ac.uk/itservices/email/blogs.html" target="_blank">Guidelines</a>.
+		<a href="//www.kent.ac.uk/itservices/forms/blogs/complaints.html" target="_blank">Report concern</a>
 	</div>
 	<?php
 }
