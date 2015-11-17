@@ -8,7 +8,7 @@ function kent_responsive_videos_embed_html( $html ) {
 	if ( empty( $html ) || ! is_string( $html ) ) return $html;
 
 	// Queue responsive video JS.
-	wp_enqueue_script( 'responsive-videos-min-script', plugins_url( 'responsive-videos/responsive-videos.min.js', dirname(__FILE__))
+	wp_enqueue_script( 'responsive-videos-min-script', plugins_url( 'responsive-videos/js/responsive-videos.min.js', dirname(__FILE__))
 	, array( 'jquery' ), '1.1', true );
 
 
