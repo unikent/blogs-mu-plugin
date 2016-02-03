@@ -144,7 +144,9 @@ function kentblogs_blog_options(){
 }
 
 function kentblogs_secure_media($content){
-	return preg_replace(preg_quote(preg_replace(array('#https://#','#http://#'),'http://',WP_SITEURL)),preg_replace(array('#https://#','#http://#'),'https://',WP_SITEURL),$content);
+	return preg_replace('#' . preg_quote(preg_replace(array('#https://#','#http://#'),'http://',WP_SITEURL)) . '#',
+						preg_replace(array('#https://#','#http://#'),'https://',WP_SITEURL),
+						$content);
 }
 
 if(defined('SECURE_MEDIA') && SECURE_MEDIA===true){
