@@ -143,5 +143,13 @@ function kentblogs_blog_options(){
 <?php
 }
 
+function kentblogs_secure_media($content){
+	return preg_replace(preg_quote(preg_replace(array('#https://#','#http://#'),'http://',WP_SITEURL)),preg_replace(array('#https://#','#http://#'),'https://',WP_SITEURL),$content);
+}
+
+if(defined('SECURE_MEDIA') && SECURE_MEDIA===true){
+	add_filter('the_content','kentblogs_secure_media');
+}
+
 //force ie edge mode
 header('X-UA-Compatible: IE=edge');
