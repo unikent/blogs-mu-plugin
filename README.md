@@ -1,5 +1,5 @@
 # blogs-mu-plugin
-must use plugin for blogs.kent [unikent/blogs](https://github.com/unikent/blogs)
+Must use plugin for blogs.kent [unikent/blogs](https://github.com/unikent/blogs)
 
 This plugin combines a number of components/features some of which were previously in separate plugins.
 
@@ -24,8 +24,10 @@ Components:
 - [Additional Misc Functions](#misc)
 
  
-## Installing
+## Usage
+This product is publicly available under the terms of the MIT license included in this repository. Please refer to the current [brand guidelines](https://www.kent.ac.uk/brand) for use of the existing brand.
 
+## Installing
 Download and install contents to the root of your mu-plugins folder within wp-content, you may need to create this directory if it doesnt exist.
 
 To install via composer see [composer installers](https://github.com/composer/installers), note this plugin should be in the root of mu-plugins not a subfolder so your composer.json should contain the following:
@@ -43,7 +45,6 @@ To install via composer see [composer installers](https://github.com/composer/in
 ```
 
 ## Creating A Build
-
 In order to compress the assets (CSS and JS) for a distribution.
 
 1. Install Node.js - this includes npm by default.
@@ -131,12 +132,10 @@ Item format:
 **NOTE this component is dependant on the [Thermal API](https://github.com/unikent/thermal-api) plugin being installed
 
 ## <a name="analytics">Analytics</a>
-
 Simple insert of Google Analytics JS to the footer in production environment only.
 
 
 ## <a name="blogs-footer">Blogs Footer</a>
-
 Adds a simple footer containing a disclaimer, *condition of use* and *guideline* links.
 
 Footer attempts to stick to the bottom of the window in the event that the page is shorter than the window height.
@@ -145,7 +144,6 @@ Attempts to deal with possibel margin or padding on the `body` tag.
 
 
 ## <a name="cron">Multisite Cron</a>
-
 An aggregator/handler/throttler for wp-cron in a wordpress multisite install.
 
 Whenever an individual blog adds/modifies/deletes a task from its own cron schedule a central list (site option) is updated with this blogs details and the timestamp of the next task due.
@@ -153,7 +151,6 @@ Whenever an individual blog adds/modifies/deletes a task from its own cron sched
 This plugin provides a script that will execute the wp-cron job of the top *5* blogs on this central cron list each time it is hit.
 
 ### Usage
-
 1. add `define('DISABLE_WP_CRON','TRUE');` to your wp-config.php file to disable the native wp-cron handling. *This is already done on blogs.kent.ac.uk*
 
 2. add a cron task to execute the `wp-multisite-cron.php` file on a regular schedule. this can be run directly from the php cli or requested via curl/wget.
@@ -162,7 +159,6 @@ This plugin provides a script that will execute the wp-cron job of the top *5* b
 
 
 ## <a name="kent-nav-bar">Kent Nav Bar</a>
-
 Implements the [Kent Nav Bar](https://github.com/unikent/kent-nav-bar) across all blogs.
 
 Uses a local config to replace the toplinks, removing the standard dropdown.
@@ -173,13 +169,11 @@ Settings -> Kent Nav Bar [example](https://blogs.kent.ac.uk/wp-admin/options-gen
 
 
 ## <a name="login-form">Login Form</a>
-
 Customises the Wordpress login form for Kent.
  
 **Also includes the [kent nav bar](#kent-nav-bar) and uses the kent-font included within it so is dependant on this component being present.**
 
 ## <a name="report-concern">Report Concern</a>
-
 Adds links to *Report Concern* on each post and comment output across all blogs.
 
 Links will open a short form which will submit to a ticket in footprints.
@@ -188,7 +182,6 @@ Various config options available in Network Admin -> Settings -> [Report Concern
 
 
 ## <a name="subheadings">Subheadings</a>
-
 Adds a Subheading field to posts using a custom metabox. Value is stored in a "SubHeading" meta.
 
 can be retrieved using `get_post_meta({post_id},'SubHeading',true)` from within wordpress
@@ -197,7 +190,6 @@ or it is surfaced in the [Thermal API](https://github.com/unikent/thermal-api) o
 
 
 ## <a name="misc">Additional Misc Functions<a>
-
 - Forces IE Edge rendering to prevent compatibility mode on *intranet* sites when within kent domain
 
 - Disables pingbacks globaly by filtering the XMLRPC method
