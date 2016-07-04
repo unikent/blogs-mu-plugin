@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Add post custom fields to the api.
+ */
+function kentblogs_add_subheading_to_api($data, &$post, $state ) {
+	if( $state === 'read' ){
+	    $subheading = get_post_meta($post->ID,'SubHeading',true);
+		$data->meta->custom_fields = array('sub_title'=> $subheading);
+	}
+	return $data;
+}
+add_filter( 'thermal_post_entity', 'kentblogs_add_subheading_to_api', 10, 3);
+
 function kentblogs_subheading_form(){
     global $post;
     $value= get_post_meta($post->ID,'SubHeading',true);
